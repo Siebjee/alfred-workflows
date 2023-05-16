@@ -1,3 +1,4 @@
+[![release-rapidapi](https://github.com/Siebjee/alfred-workflows/actions/workflows/rapidapi.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/rapidapi.yaml)
 [![release-github](https://github.com/Siebjee/alfred-workflows/actions/workflows/github.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/github.yaml)
 [![release-networklookup](https://github.com/Siebjee/alfred-workflows/actions/workflows/networklookup.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/networklookup.yaml)
 [![release-nmap](https://github.com/Siebjee/alfred-workflows/actions/workflows/nmap.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/nmap.yaml)
@@ -30,3 +31,12 @@ Modifiers:
 
 Use keyword `gh update` to update the known repositories using the github API and your access token.
 ![gh_update](./screenshots/gh_update.png)
+
+
+# RapidAPI workflow
+Configure:
+- keyword, default `paw`
+- location, example: `/path/to my/projects/dir`
+
+Use keyword `paw` to open the application. Or search for your RapidAPI project.
+![rapidapi](./screenshots/rapidapi.png)

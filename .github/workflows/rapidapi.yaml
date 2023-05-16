@@ -1,0 +1,25 @@
+permissions:
+  contents: write
+
+name: release-rapidapi
+
+on:
+  push:
+    tags:
+      - 'nl.siebjee.rapidapi-*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          cd nl.siebjee.rapidapi
+          zip -r ../nl.siebjee.rapidapi.alfredworkflow *
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: nl.siebjee.rapidapi.alfredworkflow
