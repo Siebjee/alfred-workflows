@@ -1,6 +1,6 @@
 name: release-slack
 
-on: push
+on:
   push:
     paths:
       - 'nl.siebjee.slack/**'
