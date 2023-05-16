@@ -389,7 +389,7 @@ control = Open Pull request dashboard</string>
 	<key>variables</key>
 	<dict>
 		<key>GITHUB_TOKEN</key>
-		<string>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</string>
+		<string>gho_foobar</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
