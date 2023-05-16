@@ -5,8 +5,8 @@ name: release-github
 
 on:
   push:
-    paths:
-      - 'nl.siebjee.github/**'
+    tags:
+      - 'nl.siebjee.github-*'
 
 jobs:
   build:

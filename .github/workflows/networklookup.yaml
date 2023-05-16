@@ -5,8 +5,8 @@ name: release-networklookup
 
 on:
   push:
-    paths:
-      - 'nl.siebjee.networklookup/**'
+    tags:
+      - 'nl.siebjee.networklookup-*'
 
 jobs:
   build:

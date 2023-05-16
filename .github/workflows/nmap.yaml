@@ -5,8 +5,8 @@ name: release-nmap
 
 on:
   push:
-    paths:
-      - 'nl.siebjee.nmap/**'
+    tags:
+      - 'nl.siebjee.nmap-*'
 
 jobs:
   build:

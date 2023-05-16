@@ -5,8 +5,8 @@ name: release-slack
 
 on:
   push:
-    paths:
-      - 'nl.siebjee.slack/**'
+    tags:
+      - 'nl.siebjee.slack-*'
 
 jobs:
   build:
