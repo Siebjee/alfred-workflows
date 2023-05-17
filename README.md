@@ -1,8 +1,8 @@
-[![release-rapidapi](https://github.com/Siebjee/alfred-workflows/actions/workflows/rapidapi.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/rapidapi.yaml)
-[![release-github](https://github.com/Siebjee/alfred-workflows/actions/workflows/github.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/github.yaml)
-[![release-networklookup](https://github.com/Siebjee/alfred-workflows/actions/workflows/networklookup.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/networklookup.yaml)
-[![release-nmap](https://github.com/Siebjee/alfred-workflows/actions/workflows/nmap.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/nmap.yaml)
-[![release-slack](https://github.com/Siebjee/alfred-workflows/actions/workflows/slack.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/slack.yaml)
+[![Workflow RapidAPI](https://github.com/Siebjee/alfred-workflows/actions/workflows/rapidapi.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/rapidapi.yaml)
+[![Workflow GitHub](https://github.com/Siebjee/alfred-workflows/actions/workflows/github.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/github.yaml)
+[![Workflow NetworkLookup](https://github.com/Siebjee/alfred-workflows/actions/workflows/networklookup.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/networklookup.yaml)
+[![Workflow nmap](https://github.com/Siebjee/alfred-workflows/actions/workflows/nmap.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/nmap.yaml)
+[![Workflow Slack](https://github.com/Siebjee/alfred-workflows/actions/workflows/slack.yaml/badge.svg)](https://github.com/Siebjee/alfred-workflows/actions/workflows/slack.yaml)
 
 
 # Port workflow
