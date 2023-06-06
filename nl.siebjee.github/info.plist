@@ -140,7 +140,7 @@
 				<key>script</key>
 				<string>curl --silent -u ":${github_token}" \
   -H "Accept: application/json" \
-  "https://api.github.com/user/repos?visibility=all&amp;per_page=100" | jq  -S '[.[] | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": .name, "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url}, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}} ]' | jq '{"items": .}' &gt; repositories.json
+  "https://api.github.com/user/repos?visibility=all&amp;per_page=100" | jq  -S '[.[] | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url}, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}} ]' | jq '{"items": .}' &gt; repositories.json
 echo "Updated"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
@@ -414,7 +414,7 @@ control = Open Pull request dashboard</string>
 		<string>{var:github_token}</string>
 	</dict>
 	<key>version</key>
-	<string>0.2.1</string>
+	<string>0.2.2</string>
 	<key>webaddress</key>
 	<string>https://siebjee.nl</string>
 </dict>
