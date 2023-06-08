@@ -138,9 +138,21 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>curl --silent -u ":${github_token}" \
-  -H "Accept: application/json" \
-  "https://api.github.com/user/repos?visibility=all&amp;per_page=100" | jq  -S '[.[] | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url}, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}} ]' | jq '{"items": .}' &gt; repositories.json
+				<string>#!/usr/bin/env bash
+
+(
+curl -su ":${github_token}" \
+    -H "Accept: application/json" \
+    "https://api.github.com/user/repos?visibility=all&amp;per_page=100" | jq  -S '.[] | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url }, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}}'
+
+
+for additional_repo in ${additional_repos}; do
+    curl -su ":${github_token}" \
+        -H "Accept: application/json" \
+        "https://api.github.com/repos/${additional_repo}?visibility=all&amp;per_page=100" | jq  -S '. | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url }, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}}'
+done
+) | jq -s . | jq '{"items": .}' &gt; repositories.json
+
 echo "Updated"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
@@ -407,14 +419,39 @@ control = Open Pull request dashboard</string>
 			<key>variable</key>
 			<string>github_token</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+				<key>verticalsize</key>
+				<integer>6</integer>
+			</dict>
+			<key>description</key>
+			<string>line separated "username/repository"</string>
+			<key>label</key>
+			<string>Additional Repositories</string>
+			<key>type</key>
+			<string>textarea</string>
+			<key>variable</key>
+			<string>additional_repos</string>
+		</dict>
 	</array>
 	<key>variables</key>
 	<dict>
+		<key>ADDITIONAL_REPOS</key>
+		<string>{var:additional_repos}</string>
 		<key>GH_TOKEN</key>
 		<string>{var:github_token}</string>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>0.2.2</string>
+	<string>0.3.0</string>
 	<key>webaddress</key>
 	<string>https://siebjee.nl</string>
 </dict>
