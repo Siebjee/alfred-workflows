@@ -143,13 +143,13 @@
 (
 curl -su ":${github_token}" \
     -H "Accept: application/json" \
-    "https://api.github.com/user/repos?visibility=all&amp;per_page=100" | jq  -S '.[] | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url }, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}}'
+    "https://api.github.com/user/repos?visibility=all&amp;per_page=100" | jq  -S '.[] | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.name | split("-") | join(" ")) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url }, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}}'
 
 
 for additional_repo in ${additional_repos}; do
     curl -su ":${github_token}" \
         -H "Accept: application/json" \
-        "https://api.github.com/repos/${additional_repo}?visibility=all&amp;per_page=100" | jq  -S '. | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url }, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}}'
+        "https://api.github.com/repos/${additional_repo}?visibility=all&amp;per_page=100" | jq  -S '. | {"uid": .full_name, "title": .full_name, "arg": .html_url, "match": "\(.name) \(.name | split("-") | join(" ")) \(.owner.login)", "mods": {"cmd": { "valid": true, "subtitle": "Copy ssh Clone URL", "arg": .ssh_url }, "alt": {"valid": true, "subtitle": "Copy https Clone URL", "arg": .clone_url}, "control": {"valid": true, "subtitle": "Open Pull requests URL", "arg": "\(.html_url)/pulls"}}}'
 done
 ) | jq -s . | jq '{"items": .}' &gt; repositories.json
 
@@ -329,7 +329,11 @@ Modifier keys:
 
 command = Copy SSH Clone URL
 alt     = Copy HTTPS Clone URL
-control = Open Pull request dashboard</string>
+control = Open Pull request dashboard
+
+This workflow uses the following binaries:
+- jq   (JSON parser)
+- curl (cURL for retireving data from the github API)</string>
 	<key>uidata</key>
 	<dict>
 		<key>17C9051E-4137-419D-8C93-9369CE0A1F63</key>
@@ -448,10 +452,8 @@ control = Open Pull request dashboard</string>
 		<key>GH_TOKEN</key>
 		<string>{var:github_token}</string>
 	</dict>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
-	<string>0.3.0</string>
+	<string>0.3.1</string>
 	<key>webaddress</key>
 	<string>https://siebjee.nl</string>
 </dict>
