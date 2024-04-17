@@ -89,7 +89,8 @@
 				<string>Loading projects...</string>
 				<key>script</key>
 				<string>ls "${projects}" | \
-	jq -R -s 'split("\n")[:-1] | [map({"title": . | rtrimstr(".paw"),"arg": "${projects}/\(.)"})] | add' | jq '{"items": .}'</string>
+jq -R -s --arg projects "$projects" 'split("\n")[:-1] | [map({"title": . | rtrimstr(".paw"),"arg": "\($projects)/\(.)"})] | add' | jq '{"items": .}'
+</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -228,7 +229,7 @@
 		</dict>
 	</array>
 	<key>version</key>
-	<string>0.1.1</string>
+	<string>0.1.2</string>
 	<key>webaddress</key>
 	<string>https://siebjee.nl</string>
 </dict>
