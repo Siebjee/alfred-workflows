@@ -34,7 +34,7 @@
 			<key>config</key>
 			<dict>
 				<key>alfredfiltersresults</key>
-				<false/>
+				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
 				<key>argumenttreatemptyqueryasnil</key>
@@ -58,7 +58,41 @@
 				<key>runningsubtext</key>
 				<string></string>
 				<key>script</key>
-				<string>set convPick to "{query}"tell application "System Events" to tell process "Slack"	set myHistory to every menu item of menu "History" of menu bar 1end tellset xmldata to "&lt;?xml version=\"1.0\"?&gt;"set xmldata to xmldata &amp; "&lt;items&gt;"repeat with myHist in myHistory	set historyItem to the name of myHist		if historyItem is "Back" or historyItem = "Forward" or historyItem is equal to missing value then		log "Cont: " &amp; historyItem	else if historyItem contains convPick then		log "else if: " &amp; historyItem		set xmldata to xmldata &amp; "&lt;item arg=\"" &amp; historyItem &amp; "\"&gt;"		set xmldata to xmldata &amp; "&lt;title&gt;Conversation: " &amp; historyItem &amp; "&lt;/title&gt;"		set xmldata to xmldata &amp; "&lt;/item&gt;"		exit repeat	else if convPick is null or convPick is "" then		log "else: " &amp; historyItem		set xmldata to xmldata &amp; "&lt;item arg=\"" &amp; historyItem &amp; "\"&gt;"		set xmldata to xmldata &amp; "&lt;title&gt;Conversation: " &amp; historyItem &amp; "&lt;/title&gt;"		set xmldata to xmldata &amp; "&lt;/item&gt;"	end if	end repeatset xmldata to xmldata &amp; "&lt;/items&gt;"return xmldata</string>
+				<string>try
+    tell application "System Events"
+        tell process "Slack"
+            set workspaceNames to {}
+            set menuItems to menu items of menu 1 of menu item "Workspace" of menu 1 of menu bar item "File" of menu bar 1
+            repeat with i from 1 to count of menuItems
+                try
+                    set menuItem to item i of menuItems
+                    set itemName to name of menuItem
+                    if itemName is missing value then exit repeat
+                    set end of workspaceNames to {name:itemName, index:i}
+                on error
+                    exit repeat
+                end try
+            end repeat
+        end tell
+    end tell
+
+    -- Build JSON output
+    set jsonOutput to "{\"items\": ["
+    repeat with i from 1 to count of workspaceNames
+        set itemName to name of item i of workspaceNames
+        set itemIndex to index of item i of workspaceNames
+        set jsonOutput to jsonOutput &amp; "{\"title\": \"" &amp; itemName &amp; "\", \"arg\": \"" &amp; itemIndex &amp; "\"}"
+        if i is not equal to (count of workspaceNames) then
+            set jsonOutput to jsonOutput &amp; ","
+        end if
+    end repeat
+    set jsonOutput to jsonOutput &amp; "]}"
+
+    return jsonOutput
+on error errMsg
+    return "{\"items\": [{\"title\": \"Error: " &amp; errMsg &amp; "\", \"arg\": \"\"}]}"
+end try
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -87,7 +121,7 @@
 				<key>escaping</key>
 				<integer>68</integer>
 				<key>script</key>
-				<string>tell application "System Events" to tell process "Slack"	click menu item "{query}" of menu "History" of menu bar 1end tell</string>
+				<string>tell application "System Events" to tell process "Slack"	activate	click menu item {query} of menu 1 of menu item "Workspace" of menu 1 of menu bar item "File" of menu bar 1end tell</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -124,10 +158,8 @@
 	</dict>
 	<key>userconfigurationconfig</key>
 	<array/>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
-	<string>0.1.1</string>
+	<string>0.2.0</string>
 	<key>webaddress</key>
 	<string>https://siebjee.nl</string>
 </dict>
